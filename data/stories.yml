@@ -5,13 +5,14 @@ stories:
     steps:
       - intent: greet
       - action: utter_greet
-      - intent: restaurant_search
+      - intent: search_restaurant
       - action: restaurant_form
       - active_loop: restaurant_form
+      - action: action_search_restaurants
       - action: utter_ask_notify
       - slot_was_set:
           - notify: True
-      - intent: email_query
+      - intent: query_email
       - action: utter_ask_email
       - slot_was_set:
           - email: example@email.com
@@ -22,9 +23,10 @@ stories:
     steps:
       - intent: greet
       - action: utter_greet
-      - intent: restaurant_search
+      - intent: search_restaurant
       - action: restaurant_form
       - active_loop: restaurant_form
+      - action: action_search_restaurants
       - action: utter_ask_notify
       - slot_was_set:
           - notify: False

@@ -3,7 +3,7 @@ version: "2.0"
 rules:
   - rule: Activate restaurant form
     steps:
-      - intent: restaurant_search
+      - intent: search_restaurant
       - action: restaurant_form
       - active_loop: restaurant_form
 
@@ -13,6 +13,4 @@ rules:
     steps:
       - action: restaurant_form
       - active_loop: null
-      - slot_was_set:
-          - requested_slot: null
       - action: action_search_restaurants

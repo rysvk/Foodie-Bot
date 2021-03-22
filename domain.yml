@@ -92,16 +92,6 @@ responses:
 actions:
   - action_search_restaurants
   - action_send_mail
-  - utter_ask_restaurant_form_cuisine
-  - utter_ask_restaurant_form_budget
-  - utter_ask_restaurant_form_location
-  - utter_ask_email
-  - utter_ask_notify
-  - utter_no_service
-  - utter_confirm_mail
-  - utter_default
-  - utter_goodbye
-  - utter_greet
 
 forms:
   restaurant_form:
@@ -114,3 +104,7 @@ forms:
     budget:
       - type: from_entity
         entity: budget
+
+session_config:
+  session_expiration_time: 60 # value in minutes
+  carry_over_slots_to_new_session: true
