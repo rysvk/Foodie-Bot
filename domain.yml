@@ -4,10 +4,10 @@ session_config:
   carry_over_slots_to_new_session: true
 intents:
   - greet
-  - deny
   - search_restaurant
-  - affirm
   - query_email
+  - affirm
+  - deny
   - goodbye
   - stop
 entities:
@@ -86,7 +86,9 @@ responses:
 actions:
   - action_search_restaurants
   - action_send_mail
+  - utter_ask_email
   - utter_ask_notify
+  - utter_confirm_mail
   - utter_goodbye
   - utter_greet
 forms:
