@@ -1,134 +1,133 @@
 version: "2.0"
 
 nlu:
-- intent: greet
-  examples:  |
-    - hey
-    - howdy
-    - hey there
-    - hello
-    - hi
-    - good morning
-    - good evening
-    - dear sir
-    - hi
-    - hi
-    - hello
+  - intent: greet
+    examples: |
+      - hey
+      - howdy
+      - hey there
+      - hello
+      - hi
+      - good morning
+      - good evening
+      - dear sir
+      - hi
+      - hi
+      - hello
 
-- intent: restaurant_search
-  examples:  |
-    - i'm looking for a place to eat
-    - I want to grab lunch
-    - I am searching for a dinner spot
-    - I am looking for some restaurants in [Delhi](location).
-    - I am looking for some restaurants in [Bangalore](location)
-    - show me [chinese](cuisine) restaurants
-    - show me [chines]{"entity":"cuisine", "value":"chinese"} restaurants in the [New Delhi]{"entity":"location", "value":"Delhi"}
-    - show me a [mexican](cuisine) place in the [centre](location)
-    - i am looking for an [indian](cuisine) spot called olaolaolaolaolaola
-    - search for restaurants
-    - anywhere in the [west](location)
-    - I am looking for [asian fusion](cuisine) food
-    - I am looking a restaurant in [294328](location)
-    - in [Gurgaon](location)
-    - [South Indian](cuisine)
-    - [North Indian](cuisine)
-    - [Italian](cuisine)
-    - [Chinese](cuisine: chinese)
-    - [chinese](cuisine)
-    - [Lithuania](location)
-    - Oh, sorry, in [Italy](location)
-    - in [delhi](location)
-    - I am looking for some restaurants in [Mumbai](location)
-    - I am looking for [mexican indian fusion](cuisine)
-    - can you book a table in [rome](location) in a [moderate]{"entity":"price", "value":"Rs. 300 to 700"} price range
-    - [central](location) [indian](cuisine) restaurant
-    - please help me to find restaurants in [pune](location)
-    - Please find me a restaurant in [bangalore](location)
-    - [mumbai](location)
-    - [Chinese]{"entity":"cuisine", "value":"chinese"}
-    - show me restaurants
-    - [mumbai](location)
-    - [Italian](cuisine)
-    - please find me [chinese](cuisine) restaurant in [delhi](location)
-    - can you find me a [chinese](cuisine) restaurant
-    - [delhi](location)
-    - please find me a restaurant in [ahmedabad](location)
-    - please show me a few [italian](cuisine) restaurants in [bangalore](location)
+  - intent: restaurant_search
+    examples: |
+      - i'm looking for a place to eat
+      - I want to grab lunch
+      - I am searching for a dinner spot
+      - I am looking for some restaurants in [Delhi](location).
+      - I am looking for some restaurants in [Bangalore](location)
+      - show me [chinese](cuisine) restaurants
+      - show me [chines]{"entity":"cuisine", "value":"chinese"} restaurants in the [New Delhi]{"entity":"location", "value":"Delhi"}
+      - show me a [mexican](cuisine) place in the [centre](location)
+      - i am looking for an [indian](cuisine) spot called olaolaolaolaolaola
+      - search for restaurants
+      - anywhere in the [west](location)
+      - I am looking for [asian fusion](cuisine) food
+      - I am looking a restaurant in [294328](location)
+      - in [Gurgaon](location)
+      - [South Indian](cuisine)
+      - [North Indian](cuisine)
+      - [Italian](cuisine)
+      - [Chinese](cuisine: chinese)
+      - [chinese](cuisine)
+      - [Lithuania](location)
+      - Oh, sorry, in [Italy](location)
+      - in [delhi](location)
+      - I am looking for some restaurants in [Mumbai](location)
+      - I am looking for [mexican indian fusion](cuisine)
+      - can you book a table in [rome](location) in a [moderate]{"entity":"price", "value":"Rs. 300 to 700"} price range
+      - [central](location) [indian](cuisine) restaurant
+      - please help me to find restaurants in [pune](location)
+      - Please find me a restaurant in [bangalore](location)
+      - [mumbai](location)
+      - [Chinese]{"entity":"cuisine", "value":"chinese"}
+      - show me restaurants
+      - [mumbai](location)
+      - [Italian](cuisine)
+      - please find me [chinese](cuisine) restaurant in [delhi](location)
+      - can you find me a [chinese](cuisine) restaurant
+      - [delhi](location)
+      - please find me a restaurant in [ahmedabad](location)
+      - please show me a few [italian](cuisine) restaurants in [bangalore](location)
 
-- intent: affirm
-  examples:  |
-    - yes
-    - yep
-    - yeah
-    - indeed
-    - that's right
-    - ok
-    - great
-    - right, thank you
-    - correct
-    - great choice
-    - sounds really good
-    - thanks
+  - intent: affirm
+    examples: |
+      - yes
+      - yep
+      - yeah
+      - indeed
+      - that's right
+      - ok
+      - great
+      - right, thank you
+      - correct
+      - great choice
+      - sounds really good
+      - thanks
 
-- intent: deny
+  - intent: deny
     examples: |
       - nope
       - no
       - absolutely not
 
-- intent: query_email
-  examples:  |
-    - email address is [example@domain.com](email)
-    - [example@domain.com](email)
+  - intent: query_email
+    examples: |
+      - email address is [example@domain.com](email)
+      - [example@domain.com](email)
 
-- intent: goodbye
-  examples:  |
-    - bye
-    - goodbye
-    - good bye
-    - stop
-    - end
-    - farewell
-    - Bye bye
-    - have a good one
+  - intent: goodbye
+    examples: |
+      - bye
+      - goodbye
+      - good bye
+      - stop
+      - end
+      - farewell
+      - Bye bye
+      - have a good one
 
+  - synonym: "4"
+    examples: |
+      - four
 
-- synonym: "4"
-  examples:  |
-    - four
+  - synonym: Delhi
+    examples: |
+      - New Delhi
 
-- synonym: Delhi
-  examples:  |
-    - New Delhi
+  - synonym: bangalore
+    examples: |
+      - Bengaluru
 
-- synonym: bangalore
-  examples:  |
-    - Bengaluru
+  - synonym: chinese
+    examples: |
+      - chines
+      - Chinese
+      - Chines
 
-- synonym: chinese
-  examples:  |
-    - chines
-    - Chinese
-    - Chines
+  - synonym: mid
+    examples: |
+      - moderate
 
-- synonym: mid
-  examples:  |
-    - moderate
+  - synonym: vegetarian
+    examples: |
+      - veggie
+      - vegg
 
-- synonym: vegetarian
-  examples:  |
-    - veggie
-    - vegg
+  - regex: greet
+    examples: |
+      - hey[^\s]*
 
-- regex: greet
-  examples:  |
-    - hey[^\s]*
+  - regex: pincode
+    examples: |
+      - [0-9]{6}
 
-- regex: pincode
-  examples:  |
-    - [0-9]{6}
-
-- regex: email
-  examples: |
-    - ^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$
+  - regex: email
+    examples: |
+      - ^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$
