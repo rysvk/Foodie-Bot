@@ -8,14 +8,9 @@ stories:
       - intent: search_restaurant
       - action: restaurant_form
       - active_loop: restaurant_form
-      - action: action_search_restaurants
-      - action: utter_ask_notify
-      - slot_was_set:
-          - notify: True
-      - intent: query_email
+      - intent: affirm
       - action: utter_ask_email
-      - slot_was_set:
-          - email: example@email.com
+      - intent: query_email
       - action: action_send_mail
       - action: utter_confirm_mail
 
@@ -26,8 +21,5 @@ stories:
       - intent: search_restaurant
       - action: restaurant_form
       - active_loop: restaurant_form
-      - action: action_search_restaurants
-      - action: utter_ask_notify
-      - slot_was_set:
-          - notify: False
+      - intent: deny
       - action: utter_goodbye

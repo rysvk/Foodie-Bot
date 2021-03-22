@@ -14,3 +14,5 @@ rules:
       - action: restaurant_form
       - active_loop: null
       - action: action_search_restaurants
+      - action: utter_ask_notify
+

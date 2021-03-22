@@ -33,7 +33,7 @@ nlu:
       - [South Indian](cuisine)
       - [North Indian](cuisine)
       - [Italian](cuisine)
-      - [Chinese](cuisine: chinese)
+      - [Chinese](cuisine:chinese)
       - [chinese](cuisine)
       - [Lithuania](location)
       - Oh, sorry, in [Italy](location)
