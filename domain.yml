@@ -69,9 +69,9 @@ responses:
     - text: Should I send you details of all the restaurants on email also?
       buttons:
         - title: "Yes"
-          payload: True
+          payload: "True"
         - title: "No"
-          payload: False
+          payload: "False"
 
   utter_ask_email:
     - text: What is your email address?
