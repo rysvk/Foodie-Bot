@@ -1,0 +1,31 @@
+version: "2.0"
+
+stories:
+  - story: complete path
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: restaurant_search
+      - action: restaurant_form
+      - active_loop: restaurant_form
+      - action: utter_ask_notify
+      - slot_was_set:
+          - notify: True
+      - intent: email_query
+      - action: utter_ask_email
+      - slot_was_set:
+          - email: example@email.com
+      - action: action_send_mail
+      - action: utter_confirm_mail
+
+  - story: complete no email path
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: restaurant_search
+      - action: restaurant_form
+      - active_loop: restaurant_form
+      - action: utter_ask_notify
+      - slot_was_set:
+          - notify: False
+      - action: utter_goodbye

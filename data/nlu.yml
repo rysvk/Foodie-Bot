@@ -14,7 +14,6 @@ nlu:
     - hi
     - hi
     - hello
-    - wassup
 
 - intent: restaurant_search
   examples:  |
@@ -71,7 +70,17 @@ nlu:
     - great choice
     - sounds really good
     - thanks
-    - thanks
+
+- intent: deny
+    examples: |
+      - nope
+      - no
+      - absolutely not
+
+- intent: query_email
+  examples:  |
+    - email address is [example@domain.com](email)
+    - [example@domain.com](email)
 
 - intent: goodbye
   examples:  |
@@ -120,40 +129,6 @@ nlu:
   examples:  |
     - [0-9]{6}
 
-stories:
-- story:  complete path
-  steps:
-    - intent: greet
-    - action: utter_greet
-    - intent: restaurant_search
-    - action: utter_ask_location
-    - intent: restaurant_search
-      entities:
-        - location: delhi
-    - slot_was_set:
-      - location: delhi
-    - action: utter_ask_cuisine
-    - intent: restaurant_search
-      entities:
-        - cuisine: chinese
-    - slot_was_set:
-      - cuisine: chinese
-    - action: utter_ask_budget
-    - slot_was_set:
-      - price: Lesser than Rs. 300
-    - action: action_search_restaurants
-    - action: utter_ask_notify
-    - intent: email_query
-    - slot_was_set:
-      - notify: true
-    - action: utter_ask_email
-    - slot_was_set:
-      - email: example@email.com
-    - action: utter_confirm_mail
-
-rules:
-- rule: Activate restaurant form
-  steps:
-  - intent: restaurant_search
-  - action: restaurant_form
-  - active_loop: restaurant_form
+- regex: email
+  examples: |
+    - ^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$
