@@ -1,5 +1,4 @@
 version: "2.0"
-
 nlu:
   - intent: greet
     examples: |
@@ -11,10 +10,7 @@ nlu:
       - good morning
       - good evening
       - dear sir
-      - hi
-      - hi
-      - hello
-
+      - Hi
   - intent: search_restaurant
     examples: |
       - i'm looking for a place to eat
@@ -48,14 +44,16 @@ nlu:
       - Please find me a restaurant in [bangalore](location)
       - [mumbai](location)
       - show me restaurants
-      - [mumbai](location)
-      - [Italian](cuisine)
       - please find me [chinese](cuisine) restaurant in [delhi](location)
       - can you find me a [chinese](cuisine) restaurant
       - [delhi](location)
       - please find me a restaurant in [ahmedabad](location)
       - please show me a few [italian](cuisine) restaurants in [bangalore](location)
-
+      - Find me a [cheap]{"entity": "budget", "value": "low"} one
+      - [North Indian](cuisine)
+      - in [delhi](location)
+      - [American](cuisine)
+      - Near [New Delhi](location)
   - intent: affirm
     examples: |
       - yes
@@ -70,19 +68,17 @@ nlu:
       - great choice
       - sounds really good
       - thanks
-
   - intent: deny
     examples: |
       - nope
       - no
       - absolutely not
-
+      - No
   - intent: query_email
     examples: |
       - email address is [example@domain.com](email)
       - [example@domain.com](email)
       - [example@domain.com](email) is my email address
-
   - intent: goodbye
     examples: |
       - bye
@@ -93,51 +89,40 @@ nlu:
       - farewell
       - Bye bye
       - have a good one
-
+  - synonym: chinese
+    examples: |
+      - Chinese
+      - chines
   - synonym: "4"
     examples: |
       - four
-
   - synonym: Delhi
     examples: |
       - New Delhi
-
   - synonym: bangalore
     examples: |
       - Bengaluru
-
-  - synonym: chinese
-    examples: |
-      - chines
-      - Chinese
-
   - synonym: mid
     examples: |
       - moderate
-
   - synonym: high
     examples: |
       - luxury
       - expensive
-
   - synonym: low
     examples: |
       - cheap
-
   - synonym: vegetarian
     examples: |
       - veggie
       - vegg
       - veggi
-
-  - regex: greet
-    examples: |
-      - hey[^\s]*
-
-  - regex: pincode
-    examples: |
-      - [0-9]{6}
-
   - regex: email
     examples: |
       - ^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$
+  - regex: greet
+    examples: |
+      - hey[^\s]*
+  - regex: pincode
+    examples: |
+      - [0-9]{6}

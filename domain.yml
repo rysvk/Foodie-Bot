@@ -1,41 +1,44 @@
 version: "2.0"
-
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
 intents:
   - greet
+  - deny
   - search_restaurant
   - affirm
-  - deny
   - query_email
   - goodbye
   - stop
-
 entities:
-  - cuisine
-  - location
   - budget
+  - cuisine
   - email
+  - location
   - notify
-
 slots:
   cuisine:
     type: text
+    influence_conversation: true
   location:
     type: text
+    influence_conversation: true
   budget:
     type: categorical
+    influence_conversation: true
     values:
       - low
       - mid
       - high
   email:
     type: text
+    influence_conversation: true
   notify:
     type: bool
-
+    influence_conversation: true
 responses:
   utter_greet:
     - text: Hey there! How may I help find a restaurant you ?
-
   utter_ask_restaurant_form_cuisine:
     - text: What kind of cuisine would you like?
       buttons:
@@ -51,10 +54,8 @@ responses:
           payload: South Indian
         - title: North Indian
           payload: North Indian
-
   utter_ask_restaurant_form_location:
     - text: In what location?
-
   utter_ask_restaurant_form_budget:
     - text: What's the average budget for two people?
       buttons:
@@ -64,35 +65,30 @@ responses:
           payload: mid
         - title: More than Rs.700
           payload: high
-
   utter_ask_notify:
     - text: Should I send you details of all the restaurants on email also?
       buttons:
-        - title: "Yes"
-          payload: "Yes"
-        - title: "No"
-          payload: "No"
-
+        - title: Yes
+          payload: Yes
+        - title: No
+          payload: No
   utter_ask_email:
     - text: What is your email address?
-
   utter_confirm_mail:
     - text: Sent. Bon Appetit!
-
   utter_goodbye:
     - text: Good bye, Bon Appetit!
     - text: Okay, Bon Appetit!
-
   utter_default:
     - text: Sorry I could not understand that.
-
   utter_no_service:
     - text: Sorry, we are not yet available in {location}
-
 actions:
   - action_search_restaurants
   - action_send_mail
-
+  - utter_ask_notify
+  - utter_goodbye
+  - utter_greet
 forms:
   restaurant_form:
     cuisine:
@@ -104,7 +100,3 @@ forms:
     budget:
       - type: from_entity
         entity: budget
-
-session_config:
-  session_expiration_time: 60 # value in minutes
-  carry_over_slots_to_new_session: true
