@@ -1,8 +1,8 @@
 intents:
-- affirm
+- greet
 - restaurant_search
 - email_query
-- greet
+- affirm
 - goodbye
 - stop
 
@@ -99,3 +99,16 @@ actions:
 - utter_default
 - utter_goodbye
 - utter_greet
+
+forms:
+  restaurant_form:
+    cuisine:
+      - type: from_entity
+        entity: cuisine
+    location:
+      - type: from_entity
+        entity: location
+    price:
+      - type: from_entity
+        entity: price
+    
