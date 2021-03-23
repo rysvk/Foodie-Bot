@@ -4,7 +4,6 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 import pandas as pd
-import json
 
 # Reading zomato data into a dataframe
 ZomatoData = pd.read_csv('zomato.csv')
@@ -18,17 +17,17 @@ WeOperate = ['New Delhi', 'Gurgaon', 'Noida', 'Faridabad', 'Allahabad', 'Bhubane
              'Bhopal', 'Goa', 'Chandigarh', 'Ghaziabad', 'Ooty', 'Gangtok', 'Shimla']
 
 # Getting Valid cities from the data
-WeOperate = ZomatoData['City'].value_counts().index
+WeOperate = ZomatoData['City'].str.lower().value_counts().index
 
 # Here is the output of above operation
-#   ['New Delhi', 'Gurgaon', 'Noida', 'Faridabad', 'Ranchi', 'Mangalore',
-#    'Aurangabad', 'Bhubaneshwar', 'Mumbai', 'Mysore', 'Amritsar',
-#    'Allahabad', 'Patna', 'Dehradun', 'Varanasi', 'Kanpur', 'Vizag',
-#    'Vadodara', 'Nagpur', 'Ludhiana', 'Puducherry', 'Agra', 'Kochi',
-#    'Lucknow', 'Indore', 'Surat', 'Coimbatore', 'Chennai', 'Bangalore',
-#    'Ahmedabad', 'Hyderabad', 'Jaipur', 'Guwahati', 'Pune', 'Kolkata',
-#    'Nashik', 'Bhopal', 'Goa', 'Chandigarh', 'Ghaziabad', 'Gangtok', 'Ooty',
-#    'Shimla', 'Mohali', 'Secunderabad', 'Nasik', 'Panchkula']
+# ['new delhi', 'gurgaon', 'noida', 'faridabad', 'allahabad', 'mangalore',
+# 'mysore', 'bhubaneshwar', 'ranchi', 'patna', 'aurangabad', 'amritsar',
+# 'mumbai', 'ludhiana', 'vizag', 'puducherry', 'kanpur', 'agra',
+# 'varanasi', 'nagpur', 'dehradun', 'vadodara', 'indore', 'kochi',
+# 'lucknow', 'surat', 'guwahati', 'jaipur', 'ahmedabad', 'bangalore',
+# 'hyderabad', 'coimbatore', 'chennai', 'kolkata', 'pune', 'nashik',
+# 'bhopal', 'goa', 'chandigarh', 'ghaziabad', 'ooty', 'shimla', 'gangtok',
+# 'mohali', 'secunderabad', 'nasik', 'panchkula']
 
 PRICE_RANGE_MAP = {
     'low': range(300),
@@ -46,6 +45,13 @@ def restaurant_search(city: str, cuisine: str, budget: str, limit: int) -> pd.Da
                       (ZomatoData['Average Cost for two'].apply(lambda x: x in PRICE_RANGE_MAP[budget]))][
                           ['Restaurant Name', 'Address', 'Average Cost for two',
                            'Aggregate rating']].sort_values(by='Aggregate rating', ascending=False)[:limit]
+
+
+def remove_newline(input: str) -> str:
+    """Remove the new lines from data"""
+    input.replace('\n', '')
+    input.replace('\n\r', '')
+    return input
 
 
 class ActionSearchRestaurants(Action):
@@ -74,21 +80,30 @@ class ActionSearchRestaurants(Action):
             return []
 
         dispatcher.utter_message('\n'.join(results.apply(
-            lambda x: f"{x[0]} in {x[1]} has been rated {x[3]}", axis=1).values.tolist()))
+            lambda x: f"-> {x[0]} in {remove_newline(x[1])} has been rated {x[3]}", axis=1).values.tolist()))
         return []
 
 
 class ActionSendMail(Action):
-    def name(self):
+    def name(self) -> str:
+        """Defines the action's name. Used in bot domain"""
         return 'action_send_mail'
 
-    def run(self, dispatcher, tracker, domain):
-        MailID = tracker.get_slot('mail_id')
-        sendmail(MailID, response)
-        return [SlotSet('mail_id', MailID)]
+    def run(self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[str, Any]
+            ) -> List[Dict[str, Any]]:
+        """Executing the action."""
+        email = tracker.get_slot('mail_id')
+        # sendmail(MailID, response)
+        # return [SlotSet('mail_id', MailID)]
+        return []
 
 
 if __name__ == "__main__":
     # Testing few cases
-    print(restaurant_search("Nasik", "Chinese", "mid", 5))
-    print(restaurant_search("New Delhi", "Chinese", "high", 5))
+    # print(restaurant_search("Nasik", "Chinese", "mid", 5))
+    # print(restaurant_search("New Delhi", "Chinese", "high", 5))
+    print(restaurant_search("Noida", "chinese", "mid", 5))
+    # print(WeOperate)
