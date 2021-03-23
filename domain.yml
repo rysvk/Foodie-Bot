@@ -83,6 +83,8 @@ responses:
     - text: Sorry I could not understand that.
   utter_no_service:
     - text: Sorry, we are not yet available in {location}
+  utter_no_result:
+    - text: Sorry, we did not found any restaurants in {location} with {budget} budget that serves {cuisine}
 actions:
   - action_search_restaurants
   - action_send_mail
