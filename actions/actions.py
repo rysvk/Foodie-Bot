@@ -1,9 +1,16 @@
 from typing import Any, Dict, List
 
+import ssl
+import smtplib
+import pandas as pd
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
-import pandas as pd
+
+# Create a creds.py file in the same folder with these variables
+# USERNAME = <sender email id>
+# PASSWORD = <email password>
+from actions.creds import USERNAME, PASSWORD
 
 # Reading zomato data into a dataframe
 ZomatoData = pd.read_csv('zomato.csv')
@@ -29,11 +36,27 @@ WeOperate = ZomatoData['City'].str.lower().value_counts().index
 # 'bhopal', 'goa', 'chandigarh', 'ghaziabad', 'ooty', 'shimla', 'gangtok',
 # 'mohali', 'secunderabad', 'nasik', 'panchkula']
 
-PRICE_RANGE_MAP = {
+PRICE_RANGE_MAP: Dict = {
     'low': range(300),
     'mid': range(300, 701),
     'high': range(701, 10000)  # Max value in data is 8K in data
 }
+
+EMAIL_TEMPLATE: str = """\
+From: {}
+To: {}
+Subject: Foodie Bot Restuarant Results
+
+Here, is a list of restaurant you requested
+----
+{}
+----
+
+FOODIE BOT
+"""
+
+SMTP_SERVER: str = 'smtp.gmail.com'
+PORT: int = 465
 
 
 def restaurant_search(city: str, cuisine: str, budget: str, limit: int) -> pd.DataFrame:
@@ -52,6 +75,12 @@ def remove_newline(input: str) -> str:
     input.replace('\n', '')
     input.replace('\n\r', '')
     return input
+
+
+def format_message(input: pd.DataFrame) -> str:
+    """Helper function to format the output"""
+    return '\n'.join(input.apply(
+        lambda x: f"- {x[0]} in {remove_newline(x[1])} has been rated {x[3]}", axis=1).values.tolist())
 
 
 class ActionSearchRestaurants(Action):
@@ -79,8 +108,7 @@ class ActionSearchRestaurants(Action):
             dispatcher.utter_message(response="utter_no_result")
             return []
 
-        dispatcher.utter_message('\n'.join(results.apply(
-            lambda x: f"-> {x[0]} in {remove_newline(x[1])} has been rated {x[3]}", axis=1).values.tolist()))
+        dispatcher.utter_message(format_message(results))
         return []
 
 
@@ -89,15 +117,23 @@ class ActionSendMail(Action):
         """Defines the action's name. Used in bot domain"""
         return 'action_send_mail'
 
-    def run(self,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[str, Any]
-            ) -> List[Dict[str, Any]]:
+    async def run(self,
+                  dispatcher: CollectingDispatcher,
+                  tracker: Tracker,
+                  domain: Dict[str, Any]
+                  ) -> List[Dict[str, Any]]:
         """Executing the action."""
-        email = tracker.get_slot('mail_id')
-        # sendmail(MailID, response)
-        # return [SlotSet('mail_id', MailID)]
+        email = tracker.get_slot('email')
+        city = tracker.get_slot('location')
+        budget = tracker.get_slot('budget')
+        cuisine = tracker.get_slot('cuisine')
+        context = ssl.create_default_context()
+        result = format_message(restaurant_search(city, cuisine, budget, 10))
+        message = EMAIL_TEMPLATE.format(USERNAME, email, result)
+        with smtplib.SMTP_SSL(SMTP_SERVER, PORT, context=context) as server:
+            server.login(USERNAME, PASSWORD)
+            server.sendmail(USERNAME, email, message)
+        dispatcher.utter_message(response="utter_confirm_mail")
         return []
 
 

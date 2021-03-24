@@ -2,3 +2,4 @@ models/
 *.dot
 __pycache__
 .DS_Store
+creds.py
