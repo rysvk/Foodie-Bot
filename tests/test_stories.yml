@@ -1,0 +1,34 @@
+stories:
+  - story: Testing happy path
+    steps:
+      - user: |
+          hi
+        intent: greet
+      - action: utter_greet
+      - user: |
+          im looking for a restaurant
+        intent: search_restaurant
+      - action: restaurant_form
+      - active_loop: restaurant_form
+      - user: |
+          [Chinese](cuisine) food
+        intent: search_restaurant
+      - action: restaurant_form
+      - active_loop: restaurant_form
+      - user: |
+          [noida](location)
+        intent: search_restaurant
+      - action: restaurant_form
+      - active_loop: restaurant_form
+      - user: |
+          [mid](budget)
+        intent: search_restaurant
+      - active_loop: null
+      - action: action_search_restaurant
+      - action: utter_ask_notify
+      - intent: affirm
+      - action: utter_ask_email
+      - user: |
+          [sample@email.com](email)
+        intent: query_email
+      - action: action_send_mail
