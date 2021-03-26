@@ -38,7 +38,7 @@ slots:
     influence_conversation: true
 responses:
   utter_greet:
-    - text: Hey there! How may I help find a restaurant you ?
+    - text: Hi There, how can I help ?
   utter_ask_restaurant_form_cuisine:
     - text: What kind of cuisine would you like?
       buttons:
