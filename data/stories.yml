@@ -1,25 +1,247 @@
 version: "2.0"
 
 stories:
-  - story: complete path
-    steps:
-      - intent: greet
-      - action: utter_greet
-      - intent: search_restaurant
-      - action: restaurant_form
-      - active_loop: restaurant_form
-      - intent: affirm
-      - action: utter_ask_email
-      - intent: query_email
-      - action: action_send_mail
-      - action: utter_confirm_mail
 
-  - story: complete no email path
-    steps:
-      - intent: greet
-      - action: utter_greet
-      - intent: search_restaurant
-      - action: restaurant_form
-      - active_loop: restaurant_form
-      - intent: deny
-      - action: utter_goodbye
+- story: interactive_story_Happy_PATH
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: search_restaurant
+  - action: restaurant_form
+  - active_loop: restaurant_form
+  - slot_was_set:
+    - requested_slot: location
+  - slot_was_set:
+    - location: bangalore
+  - slot_was_set:
+    - location: bangalore
+  - slot_was_set:
+    - requested_slot: cuisine
+  - slot_was_set:
+    - cuisine: Italian
+  - slot_was_set:
+    - cuisine: Italian
+  - slot_was_set:
+    - requested_slot: budget
+  - slot_was_set:
+    - budget: high
+  - slot_was_set:
+    - budget: high
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_search_restaurants
+  - action: utter_ask_notify
+  - intent: affirm
+  - action: utter_ask_email
+  - intent: query_email
+    entities:
+    - email: shouvikroy.kol@gmail.com
+  - slot_was_set:
+    - email: shouvikroy.kol@gmail.com
+  - action: action_send_mail
+  - action: utter_confirm_mail
+  - action: action_restart
+
+- story: interactive_story_Not_operated
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: search_restaurant
+    entities:
+    - location: Mohali
+  - slot_was_set:
+    - location: Mohali
+  - action: restaurant_form
+  - active_loop: cls
+  - slot_was_set:
+    - location: null
+  - slot_was_set:
+    - location: null
+  - slot_was_set:
+    - requested_slot: location
+  - slot_was_set:
+    - location: Allahabad
+  - slot_was_set:
+    - location: Allahabad
+  - slot_was_set:
+    - requested_slot: cuisine
+  - slot_was_set:
+    - cuisine: chinese
+  - slot_was_set:
+    - cuisine: chinese
+  - slot_was_set:
+    - requested_slot: budget
+  - slot_was_set:
+    - budget: high
+  - slot_was_set:
+    - budget: high
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_search_restaurants
+  - action: utter_ask_notify
+  - intent: affirm
+  - action: action_send_mail
+  - action: utter_confirm_mail
+  - action: action_restart
+
+- story: interactive_story_HAPPY_NO_EMAIL
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: search_restaurant
+  - action: restaurant_form
+  - active_loop: restaurant_form
+  - slot_was_set:
+    - requested_slot: location
+  - slot_was_set:
+    - location: Mumbai
+  - slot_was_set:
+    - location: Mumbai
+  - slot_was_set:
+    - requested_slot: cuisine
+  - slot_was_set:
+    - cuisine: chinese
+  - slot_was_set:
+    - cuisine: chinese
+  - slot_was_set:
+    - requested_slot: budget
+  - slot_was_set:
+    - budget: mid
+  - slot_was_set:
+    - budget: mid
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_search_restaurants
+  - action: utter_ask_notify
+  - intent: deny
+  - action: utter_goodbye
+  - action: action_restart
+
+- story: interactive_story_HAPPY_WITH_CITY
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: search_restaurant
+    entities:
+    - location: Kolkata
+  - slot_was_set:
+    - location: Kolkata
+  - action: restaurant_form
+  - active_loop: restaurant_form
+  - slot_was_set:
+    - location: Kolkata
+  - slot_was_set:
+    - location: Kolkata
+  - slot_was_set:
+    - requested_slot: cuisine
+  - slot_was_set:
+    - cuisine: American
+  - slot_was_set:
+    - cuisine: American
+  - slot_was_set:
+    - requested_slot: budget
+  - slot_was_set:
+    - budget: mid
+  - slot_was_set:
+    - budget: mid
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_search_restaurants
+  - action: utter_ask_notify
+  - intent: affirm
+  - action: utter_ask_email
+  - intent: query_email
+    entities:
+    - email: shouvikroy@outlook.com
+  - slot_was_set:
+    - email: shouvikroy@outlook.com
+  - action: action_send_mail
+  - action: utter_confirm_mail
+  - action: action_restart
+
+- story: interactive_story_HAPPY_LOC_CUI
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: search_restaurant
+    entities:
+    - cuisine: chinese
+    - location: Chandigarh
+  - slot_was_set:
+    - cuisine: chinese
+  - slot_was_set:
+    - location: Chandigarh
+  - action: restaurant_form
+  - active_loop: restaurant_form
+  - slot_was_set:
+    - cuisine: chinese
+  - slot_was_set:
+    - location: Chandigarh
+  - slot_was_set:
+    - cuisine: chinese
+  - slot_was_set:
+    - location: Chandigarh
+  - slot_was_set:
+    - requested_slot: budget
+  - slot_was_set:
+    - budget: high
+  - slot_was_set:
+    - budget: high
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_search_restaurants
+  - action: utter_ask_notify
+  - intent: deny
+  - action: utter_goodbye
+  - action: action_restart
+
+
+- story: interactive_story_ALLSLOT_HAPPY
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: search_restaurant
+    entities:
+    - budget: high
+    - cuisine: chinese
+    - location: Mumbai
+  - slot_was_set:
+    - cuisine: chinese
+  - slot_was_set:
+    - location: Mumbai
+  - slot_was_set:
+    - budget: high
+  - action: restaurant_form
+  - active_loop: restaurant_form
+  - slot_was_set:
+    - budget: high
+  - slot_was_set:
+    - cuisine: chinese
+  - slot_was_set:
+    - location: Mumbai
+  - slot_was_set:
+    - budget: high
+  - slot_was_set:
+    - cuisine: chinese
+  - slot_was_set:
+    - location: Mumbai
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_search_restaurants
+  - action: utter_ask_notify
+  - intent: affirm
+  - action: utter_ask_email
+  - intent: query_email
+    entities:
+    - email: shouvikroy.nitdgp@gmail.com
+  - slot_was_set:
+    - email: shouvikroy.nitdgp@gmail.com
+  - action: action_send_mail
+  - action: utter_confirm_mail
+  - action: action_restart

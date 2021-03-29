@@ -14,6 +14,8 @@ from actions.creds import USERNAME, PASSWORD
 
 # Reading zomato data into a dataframe
 ZomatoData = pd.read_csv('zomato.csv')
+cities=[x.lower() for x in ZomatoData.City.unique()]
+
 ZomatoData = ZomatoData.drop_duplicates().reset_index(drop=True)
 
 # Cities from the template have some missing values like Nasik
@@ -24,7 +26,7 @@ WeOperate = ['New Delhi', 'Gurgaon', 'Noida', 'Faridabad', 'Allahabad', 'Bhubane
              'Bhopal', 'Goa', 'Chandigarh', 'Ghaziabad', 'Ooty', 'Gangtok', 'Shimla']
 
 # Getting Valid cities from the data
-WeOperate = ZomatoData['City'].str.lower().value_counts().index
+WeOperate = [x.lower() for x in WeOperate]
 
 # Here is the output of above operation
 # ['new delhi', 'gurgaon', 'noida', 'faridabad', 'allahabad', 'mangalore',
@@ -133,8 +135,43 @@ class ActionSendMail(Action):
         with smtplib.SMTP_SSL(SMTP_SERVER, PORT, context=context) as server:
             server.login(USERNAME, PASSWORD)
             server.sendmail(USERNAME, email, message)
-        dispatcher.utter_message(response="utter_confirm_mail")
         return []
+
+
+from typing import Text, List, Any, Dict
+
+from rasa_sdk import Tracker, FormValidationAction
+from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.types import DomainDict
+
+
+class ValidateRestaurantForm(FormValidationAction):
+    def name(self) -> Text:
+        return "validate_restaurant_form"
+
+    def validate_location(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        incity = slot_value.lower() in cities
+        inoperatedcities = slot_value.lower() in WeOperate
+        
+        
+        if slot_value is not None :
+
+            if not inoperatedcities:
+                if incity:
+                    dispatcher.utter_message(response="utter_not_operated")
+                else:
+                    dispatcher.utter_message(response="utter_invalid_location")
+
+            if slot_value.lower() in WeOperate:
+                return {"location": slot_value}
+            else:
+                return {"location": None}
 
 
 if __name__ == "__main__":

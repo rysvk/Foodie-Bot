@@ -1,21 +1,21 @@
-version: "2.0"
+version: '2.0'
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 intents:
-  - greet
-  - search_restaurant
-  - query_email
-  - affirm
-  - deny
-  - goodbye
-  - stop
+- greet
+- search_restaurant
+- query_email
+- affirm
+- deny
+- goodbye
+- stop
 entities:
-  - budget
-  - cuisine
-  - email
-  - location
-  - notify
+- budget
+- cuisine
+- email
+- location
+- notify
 slots:
   cuisine:
     type: text
@@ -23,13 +23,14 @@ slots:
   location:
     type: text
     influence_conversation: true
+    auto_fill: false
   budget:
     type: categorical
     influence_conversation: true
     values:
-      - low
-      - mid
-      - high
+    - low
+    - mid
+    - high
   email:
     type: text
     influence_conversation: true
@@ -38,69 +39,77 @@ slots:
     influence_conversation: true
 responses:
   utter_greet:
-    - text: Hi There, how can I help ?
+  - text: Hi There, how can I help ?
   utter_ask_restaurant_form_cuisine:
-    - text: What kind of cuisine would you like?
-      buttons:
-        - title: Chinese
-          payload: Chinese
-        - title: Mexican
-          payload: Mexican
-        - title: Italian
-          payload: Italian
-        - title: American
-          payload: American
-        - title: South Indian
-          payload: South Indian
-        - title: North Indian
-          payload: North Indian
+  - text: What kind of cuisine would you like?
+    buttons:
+    - title: Chinese
+      payload: Chinese
+    - title: Mexican
+      payload: Mexican
+    - title: Italian
+      payload: Italian
+    - title: American
+      payload: American
+    - title: South Indian
+      payload: South Indian
+    - title: North Indian
+      payload: North Indian
   utter_ask_restaurant_form_location:
-    - text: In what location?
+  - text: In what location?
   utter_ask_restaurant_form_budget:
-    - text: What's the average budget for two people?
-      buttons:
-        - title: Less than Rs.300
-          payload: low
-        - title: Between Rs.300 and Rs.700
-          payload: mid
-        - title: More than Rs.700
-          payload: high
+  - text: What's the average budget for two people?
+    buttons:
+    - title: Less than Rs.300
+      payload: low
+    - title: Between Rs.300 and Rs.700
+      payload: mid
+    - title: More than Rs.700
+      payload: high
   utter_ask_notify:
-    - text: Should I send you details of all the restaurants on email also?
-      buttons:
-        - title: Yes
-          payload: Yes
-        - title: No
-          payload: No
+  - text: Should I send you details of all the restaurants on email also?
+    buttons:
+    - title: Yes
+      payload: Yes
+    - title: No
+      payload: No
   utter_ask_email:
-    - text: What is your email address?
+  - text: What is your email address?
   utter_confirm_mail:
-    - text: Sent. Bon Appetit!
+  - text: Sent. Bon Appetit!
   utter_goodbye:
-    - text: Good bye, Bon Appetit!
-    - text: Okay, Bon Appetit!
+  - text: Good bye, Bon Appetit!
+  - text: Okay, Bon Appetit!
   utter_default:
-    - text: Sorry I could not understand that.
+  - text: Sorry I could not understand that.
   utter_no_service:
-    - text: Sorry, we are not yet available in {location}
+  - text: Sorry, we are not yet available in {location}
   utter_no_result:
-    - text: Sorry, we did not found any restaurants in {location} with {budget} budget that serves {cuisine}
+  - text: Sorry, we did not found any restaurants in {location} with {budget} budget that serves {cuisine}
+  utter_not_operated:
+  - text: Sorry, we don’t operate in this city. Please try again.
+  utter_invalid_location:
+  - text: Sorry, didn’t find any such location. Please try again.
 actions:
-  - action_search_restaurants
-  - action_send_mail
-  - utter_ask_email
-  - utter_ask_notify
-  - utter_confirm_mail
-  - utter_goodbye
-  - utter_greet
+- action_search_restaurants
+- action_send_mail
+- utter_ask_email
+- utter_ask_notify
+- utter_confirm_mail
+- utter_default
+- utter_goodbye
+- utter_greet
+- utter_invalid_location
+- utter_not_operated
+- validate_restaurant_form
 forms:
   restaurant_form:
-    cuisine:
-      - type: from_entity
-        entity: cuisine
     location:
-      - type: from_entity
-        entity: location
+    - type: from_entity
+      entity: location
+    cuisine:
+    - type: from_entity
+      entity: cuisine
     budget:
-      - type: from_entity
-        entity: budget
+    - type: from_entity
+      entity: budget
